@@ -24,7 +24,7 @@ This repository contains a proxy for Apigee X able to call GCP Services: BigQuer
 3. Deploy this proxy<BR>Deploy proxy in **apiproxy** folder.
 
 4. Create GCP Service Accounts<BR>To authorize Apigee to use Google Cloud BigQuery and PubSub, you must first: 
-    - Create a service account in Google Cloud and assign it the necessary roles to access your BigQuery dataset and publish intot a PubSub Topicc. 
+    - Create a service account in Google Cloud and assign it the necessary roles to access your BigQuery dataset and publish a message into a PubSub topic. 
     - Create and download the 2 json keys for the service accounts
 
 5. Configure GCP Services (BigQuery and PubSub)<BR>If needed, in your GCP project, create a BigQuery table and PubSub topic to be able to use this proxy.

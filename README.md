@@ -8,7 +8,7 @@
 
 ## Intro
 
-This repository contains a proxy for Apigee X able to call GCP Services: BigQuery (read) only and PubSub (publish). It doesn't use Apigee Edge extension features.
+This repository contains a proxy for Apigee Edge/x/hybrid to call 2 GCP Services: BigQuery (read) only and PubSub (publish). It doesn't use Apigee Edge extension features.
 
 ## Requirement
 

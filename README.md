@@ -13,7 +13,7 @@ This repository contains a proxy for Apigee X able to call 2 GCP Services: BigQu
 ## Requirement
 
 - A Google Cloud Platform account 
-- An Apigee organization
+- An Apigee organization (Edge or X/hybrid)
 
 ## Installation
 

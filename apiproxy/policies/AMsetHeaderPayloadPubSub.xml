@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AMsetHeaderPayloadPubSub">
+    <DisplayName>AM.setHeaderPayload.PubSub</DisplayName>
+    <Properties/>
+    <Set>
+        <Headers>
+            <Header name="Authorization">Bearer {private.gcp.access_token}</Header>
+            <Header name="Accept">application/json</Header>
+            <Header name="Content-Type">application/json</Header>
+        </Headers>
+        <Payload contentType="application/json">
+            {"messages": [{ "data": "{encodeBase64(request.content)}" }]}        
+        </Payload>
+        <Verb>POST</Verb>
+    </Set>
+    <AssignVariable>
+        <Name>gcp.projectid</Name>
+        <Value>xxxxx</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>gcp.topicid</Name>
+        <Value>yyyyy</Value>
+    </AssignVariable>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

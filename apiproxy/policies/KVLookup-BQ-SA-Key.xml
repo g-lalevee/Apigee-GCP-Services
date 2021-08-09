@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<KeyValueMapOperations continueOnError="false" enabled="true" name="KVLookup-BQ-SA-Key" mapIdentifier="GCP-SA-settings">
+    <DisplayName>KV.Lookup-BQ-SA-Key</DisplayName>
+    <Scope>environment</Scope>
+    <ExpiryTimeInSecs>30</ExpiryTimeInSecs>
+    <Get assignTo="private.gcp.service_account.key">
+        <Key>
+            <Parameter>MyBQ</Parameter>
+            <Parameter>privKeyPem</Parameter>
+        </Key>
+    </Get>
+</KeyValueMapOperations>

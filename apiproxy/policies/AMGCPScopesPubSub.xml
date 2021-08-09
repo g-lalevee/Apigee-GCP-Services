@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AMGCPScopesPubSub">
+    <DisplayName>AM.GCPScopes.PubSub</DisplayName>
+    <Properties/>
+    <AssignVariable>
+        <Name>gcp.scopes</Name>
+        <Value>https://www.googleapis.com/auth/pubsub</Value>
+    </AssignVariable>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

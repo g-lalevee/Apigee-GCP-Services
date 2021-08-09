@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AMsetHeaderPayload.BQ">
+    <DisplayName>AM.setHeaderPayload.BQ</DisplayName>
+    <Properties/>
+    <Set>
+        <Headers>
+            <Header name="Authorization">Bearer {private.gcp.access_token}</Header>
+            <Header name="Accept">application/json</Header>
+            <Header name="Content-Type">application/json</Header>
+        </Headers>
+        <Payload contentType="application/json">
+            {"query":"SELECT date, airline,airline_code, departure_airport, departure_state, departure_lat, departure_lon, arrival_airport, arrival_state, arrival_lat, arrival_lon, departure_schedule, departure_actual, departure_delay, arrival_schedule, arrival_actual, arrival_delay FROM [bigquery-samples.airline_ontime_data.flights] LIMIT 10"}
+        </Payload>
+        <Verb>POST</Verb>
+    </Set>
+    <AssignVariable>
+        <Name>gcp.projectid</Name>
+        <Value>xxxxxx</Value>
+    </AssignVariable>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</AssignMessage>

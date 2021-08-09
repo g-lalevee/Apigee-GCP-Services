@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <RouteRule name="BigQuery">
+        <Condition>(proxy.pathsuffix MatchesPath "/bq")</Condition>
+        <TargetEndpoint>BigQuery</TargetEndpoint>
+    </RouteRule>
+    <RouteRule name="PubSub">
+        <Condition>(proxy.pathsuffix MatchesPath "/ps")</Condition>
+        <TargetEndpoint>PubSub</TargetEndpoint>
+    </RouteRule>
+    <RouteRule name="noroute"/>
+    <PreFlow name="PreFlow">
+        <Request/>
+        <Response/>
+    </PreFlow>
+    <Flows>
+        <Flow name="BigQuery">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>KVLookup-BQ-SA-Key</Name>
+                </Step>
+                <Step>
+                    <Name>AMGCPScopesBQ</Name>
+                </Step>
+                <Step>
+                    <Name>FCGetGCPToken</Name>
+                </Step>
+                <Step>
+                    <Name>AMsetHeaderPayload.BQ</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/bq") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="PubSub">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>KVLookup-PubSub-SA-Key</Name>
+                </Step>
+                <Step>
+                    <Name>AMGCPScopesPubSub</Name>
+                </Step>
+                <Step>
+                    <Name>FCGetGCPToken</Name>
+                </Step>
+                <Step>
+                    <Name>AMsetHeaderPayloadPubSub</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/ps") and (request.verb = "POST")</Condition>
+        </Flow>
+        <Flow name="fallback 404">
+            <Request>
+                <Step>
+                    <Name>RF-404</Name>
+                </Step>
+            </Request>
+        </Flow>
+    </Flows>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response/>
+    </PostFlow>
+    <HTTPProxyConnection>
+        <BasePath>/v1/gcpservice</BasePath>
+    </HTTPProxyConnection>
+</ProxyEndpoint>

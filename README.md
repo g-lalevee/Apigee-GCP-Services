@@ -77,7 +77,7 @@ If you use Apigee Edge, you can also use the Web UI.
             FROM [bigquery-samples.airline_ontime_data.flights] LIMIT 10"}
     </Payload>
     ```
-    <BR>In this sample, we use the dataset **airline_ontime_data** from project **bigquery-samples**, a public data project automatically pinned to every GCP project. <BR>Then, set **gcp.projectid** value with your GCP Project ID:
+    In this sample, we use the dataset **airline_ontime_data** from project **bigquery-samples**, a public data project automatically pinned to every GCP project. <BR>Then, set **gcp.projectid** value with your GCP Project ID:
     ```
     <AssignVariable>
         <Name>gcp.projectid</Name>

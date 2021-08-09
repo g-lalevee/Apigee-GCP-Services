@@ -1,6 +1,6 @@
 [![PyPI status](https://img.shields.io/pypi/status/ansicolortags.svg)](https://pypi.python.org/pypi/ansicolortags/) 
 
-# Apigee X - GCP Services
+# Apigee - GCP Services
 
 **This is not an official Google product.**<BR>This implementation is not an official Google product, nor is it part of an official Google product. Support is available on a best-effort basis via GitHub.
 
@@ -8,12 +8,12 @@
 
 ## Intro
 
-This repository contains a proxy for Apigee X able to call 2 GCP Services: BigQuery (read) only and PubSub (publish).
+This repository contains a proxy for Apigee X able to call 2 GCP Services: BigQuery (read) only and PubSub (publish). It doesn't use Apigee Edge extensions.
 
 ## Requirement
 
 - A Google Cloud Platform account 
-- An Apigee X organization
+- An Apigee organization
 
 ## Installation
 

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ProxyEndpoint name="default">
+    <RouteRule name="Firestore">
+        <Condition>(proxy.pathsuffix MatchesPath "/fs")</Condition>
+        <TargetEndpoint>Firestore</TargetEndpoint>
+    </RouteRule>
     <RouteRule name="BigQuery">
         <Condition>(proxy.pathsuffix MatchesPath "/bq")</Condition>
         <TargetEndpoint>BigQuery</TargetEndpoint>
@@ -14,6 +18,25 @@
         <Response/>
     </PreFlow>
     <Flows>
+        <Flow name="Firestore-Native">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>KVLookup-FSN-SA-Key</Name>
+                </Step>
+                <Step>
+                    <Name>AMGCPScopesFirestore</Name>
+                </Step>
+                <Step>
+                    <Name>FCGetGCPToken</Name>
+                </Step>
+                <Step>
+                    <Name>AMsetHeaderPayloadFirestore</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/fs") and (request.verb = "GET")</Condition>
+        </Flow>
         <Flow name="BigQuery">
             <Description/>
             <Request>

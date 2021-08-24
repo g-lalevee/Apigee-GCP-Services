@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<AssignMessage continueOnError="false" enabled="true" name="AMsetHeaderPayloadPubSub">
-    <DisplayName>AM.setHeaderPayload.PubSub</DisplayName>
+<AssignMessage continueOnError="false" enabled="true" name="AMsetHeaderPayloadFirestore">
+    <DisplayName>AM.setHeaderPayload.Firestore</DisplayName>
     <Properties/>
     <Set>
         <Headers>
@@ -8,18 +8,15 @@
             <Header name="Accept">application/json</Header>
             <Header name="Content-Type">application/json</Header>
         </Headers>
-        <Payload contentType="application/json">
-            {"messages": [{ "data": "{encodeBase64(request.content)}" }]}        
-        </Payload>
-        <Verb>POST</Verb>
+        <Verb>GET</Verb>
     </Set>
     <AssignVariable>
         <Name>gcp.projectid</Name>
-        <Value>lalevee-tests</Value>
+        <Value>bap-emea-apigee-5</Value>
     </AssignVariable>
     <AssignVariable>
-        <Name>gcp.topicid</Name>
-        <Value>connected-car</Value>
+        <Name>collection.name</Name>
+        <Value>aircraft</Value>
     </AssignVariable>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
     <AssignTo createNew="false" transport="http" type="request"/>

@@ -15,7 +15,7 @@
     </Set>
     <AssignVariable>
         <Name>gcp.projectid</Name>
-        <Value>xxxxxx</Value>
+        <Value>lalevee-tests</Value>
     </AssignVariable>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
 </AssignMessage>

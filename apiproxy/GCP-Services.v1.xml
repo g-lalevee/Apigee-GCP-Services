@@ -1,8 +1,8 @@
-<APIProxy revision="1" name="GCP-Services.v1">
+<APIProxy revision="11" name="GCP-Services.v1">
     <DisplayName></DisplayName>
     <Description></Description>
-    <CreatedAt>1628550644439</CreatedAt>
-    <LastModifiedAt>1628550659193</LastModifiedAt>
+    <CreatedAt>1629836727779</CreatedAt>
+    <LastModifiedAt>1629836727779</LastModifiedAt>
     <BasePaths>/v1/gcpservice</BasePaths>
     <Policies>
         <Policy>RF-404</Policy>
@@ -14,6 +14,9 @@
         <Policy>AMGCPScopesPubSub</Policy>
         <Policy>AMsetHeaderPayload.BQ</Policy>
         <Policy>AMsetHeaderPayloadPubSub</Policy>
+        <Policy>KVLookup-FSN-SA-Key</Policy>
+        <Policy>AMGCPScopesFirestore</Policy>
+        <Policy>AMsetHeaderPayloadFirestore</Policy>
     </Policies>
     <ProxyEndpoints>
         <ProxyEndpoint>default</ProxyEndpoint>
@@ -21,5 +24,6 @@
     <TargetEndpoints>
         <TargetEndpoint>BigQuery</TargetEndpoint>
         <TargetEndpoint>PubSub</TargetEndpoint>
+        <TargetEndpoint>Firestore</TargetEndpoint>
     </TargetEndpoints>
 </APIProxy>

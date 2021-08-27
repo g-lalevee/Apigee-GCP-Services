@@ -8,7 +8,7 @@
 
 ## Intro
 
-This repository contains a proxy for Apigee Edge/x/hybrid to call 3 GCP Services: BigQuery (read) and Cloud Firestore in Native mode (list) and PubSub (publish). It doesn't use Apigee Edge extension features.
+This repository contains a proxy for Apigee Edge/x/hybrid to call 4 GCP Services: BigQuery (read) and Cloud Firestore in Native mode (list), Cloud Logging (write) and PubSub (publish). It doesn't use Apigee Edge extension features.
 
 ![Proxy Overview](/images/proxy-overview.jpg)
 
@@ -25,13 +25,13 @@ This repository contains a proxy for Apigee Edge/x/hybrid to call 3 GCP Services
 
 3. Deploy this proxy<BR>Deploy proxy in **apiproxy** folder.
 
-4. Create GCP Service Accounts<BR>To authorize Apigee to use Google Cloud BigQuery and PubSub, you must first: 
-    - Create 3 service accounts in Google Cloud and assign it the necessary roles to access your BigQuery dataset, your Firestore collection and publish a message into a PubSub topic (see [Understanding GCP roles](https://cloud.google.com/iam/docs/understanding-roles)). 
-    - Create and download the 3 json keys for the 3 service accounts
+4. Create GCP Service Accounts<BR>To authorize Apigee to use Google Cloud BigQuery, Firestore, Cloud Logging and PubSub, you must first: 
+    - Create 4 service accounts in Google Cloud and assign it the necessary roles to access your BigQuery dataset, your Firestore collection and write in Cloud Logging and publish a message into a PubSub topic (see [Understanding GCP roles](https://cloud.google.com/iam/docs/understanding-roles)).  
+    - Create and download the 4 json keys for the 3 service accounts
 
 5. Configure GCP Services (BigQuery, Cloud Firestore in Native mode and PubSub)<BR>If needed, in your GCP project, create a BigQuery table, a Firestore Collection and a PubSub topic to be able to use this proxy.
 
-6. Upload your 3 GCP Service Account JSON files content into KVM Entries<BR>If you use Apigee X/hybrid, you can create a KVM using the following command
+6. Upload your 4 GCP Service Account JSON files content into KVM Entries<BR>If you use Apigee X/hybrid, you can create a KVM using the following command
 
 ```sh
 export TOKEN=$(gcloud auth print-access-token)
@@ -46,7 +46,7 @@ curl -X POST \
     --data "{\"name\":\"$KVM_NAME\",\"encrypted\": true}"
 ```
 
-After that, to store BigQuery, Firestore and PubSub Service accounts JSON file content, create KVM entries using kvm-admin-api:
+After that, to store BigQuery, Firestore, Cloud Logging and PubSub Service accounts JSON file content, create KVM entries using kvm-admin-api:
 
 ```sh
 export TOKEN=$(gcloud auth print-access-token)
@@ -71,12 +71,23 @@ curl -i -X POST \
    "https://$APIGEE_HOSTNAME/kvm-admin/v1/organizations/${APIGEE_ORG}/environments/$APIGEE_ENV/keyvaluemaps/$KVM_NAME/entries"
    -H "Content-Type:application/json" \
    -H "Authorization:Bearer $TOKEN" \
+   -d '{ "key": "MyLOG__privKeyPem", "value": "<copy here Cloud Logging SA key file jSON content>" } '
+
+curl -i -X POST \
+   "https://$APIGEE_HOSTNAME/kvm-admin/v1/organizations/${APIGEE_ORG}/environments/$APIGEE_ENV/keyvaluemaps/$KVM_NAME/entries"
+   -H "Content-Type:application/json" \
+   -H "Authorization:Bearer $TOKEN" \
    -d '{ "key": "MyPubSub__privKeyPem", "value": "<copy here PubSub SA key file jSON content>" } ' 
 ```
 If you use Apigee Edge, you can also use the Web UI.
 
 7. Configure this proxy
-    1. If needed, update AM.GCPScopes.BQ, AM.GCPScopes.Firestore and AM.GCPScopes.PubSub policies to set the required scopes. In, this sample proxy, we will use ```https://www.googleapis.com/auth/pubsub``` scope for PubSub, ```https://www.googleapis.com/auth/datastore``` for Firestore and, ```https://www.googleapis.com/auth/bigquery.readonly``` for BigQuery.<BR>You can find documentation about GCP service scopes in [GCP documentation.](https://developers.google.com/identity/protocols/oauth2/scopes)
+    1. If needed, update AM.GCPScopes.BQ, AM.GCPScopes.Firestore, AM.GCPScopes.LOG and AM.GCPScopes.PubSub policies to set the required scopes. In, this sample proxy, we will use: 
+    - ```https://www.googleapis.com/auth/pubsub``` scope for PubSub, 
+    -  ```https://www.googleapis.com/auth/datastore``` for Firestore  
+    -  ```https://www.googleapis.com/auth/logging.write``` for Cloud Logging
+    - ```https://www.googleapis.com/auth/bigquery.readonly``` for BigQuery.
+    <BR>You can find documentation about GCP service scopes in [GCP documentation.](https://developers.google.com/identity/protocols/oauth2/scopes)
 
     2. Update AM.setHeaderPayload.BQ policy<BR>Update the payload with your BigQuery query statement:
     ```
@@ -91,7 +102,7 @@ If you use Apigee Edge, you can also use the Web UI.
         <Name>gcp.projectid</Name>
         <Value>xxxxx</Value>
     </AssignVariable>
-    ````
+    ```
 
     3. Update AM.setHeaderPayload.Firestore policy<BR>Set **gcp.projectid** and **collection.name** value with your GCP Project ID and Firestore collection name:
     
@@ -104,9 +115,23 @@ If you use Apigee Edge, you can also use the Web UI.
         <Name>collection.name</Name>
         <Value>yyyyy</Value>
     </AssignVariable>
-    ````
+    ```
 
-    4. AM.setHeaderPayload.PubSub policy.<BR>Set **gcp.projectid** and **gcp.topicid** value with your GCP Project ID and PubSub topic:
+    4. Update AM.setHeaderPayload.LOG policy<BR>Set **gcp.projectid** and **gcplogging.logid** value with your GCP Project ID and the log name you want to use:
+    
+    ```
+    <AssignVariable>
+        <Name>gcp.projectid</Name>
+        <Value>xxxxx</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>gcplogging.logid</Name>
+        <Value>yyyyy</Value>
+    </AssignVariable>
+    ```
+    > **_NOTE:_**  the log record format is defined in JS-SetLoggingRecord javascript policy
+
+    5. AM.setHeaderPayload.PubSub policy.<BR>Set **gcp.projectid** and **gcp.topicid** value with your GCP Project ID and PubSub topic:
 
     ```
     <AssignVariable>
@@ -131,6 +156,11 @@ curl -i -X GET  'https://<YOUR-HOSTNAME>/v1/gcpservice/bq'
 - Firestore (it returns all documents in the collection defined in proxy)
 ```
 curl -i -X GET 'https://<YOUR-HOSTNAME>/v1/gcpservice/fs'
+```
+
+- Cloud Logging (it returns th elink to Google Cloud Console, Cloud Logging Query builder)
+```
+curl -i -X GET 'https://<YOUR-HOSTNAME>/v1/gcpservice/log'
 ```
 
 - PubSub (body contains the message to be post in topic specified in the proxy)

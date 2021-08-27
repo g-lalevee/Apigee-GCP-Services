@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AMsetHeaderPayload.LOG">
+    <DisplayName>AM.setHeaderPayload.LOG</DisplayName>
+    <Properties/>
+    <AssignVariable>
+        <Name>gcp.projectid</Name>
+        <Value>bap-emea-apigee-5</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>gcplogging.logid</Name>
+        <Value>apigee-logs</Value>
+    </AssignVariable>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</AssignMessage>

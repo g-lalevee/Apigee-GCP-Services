@@ -56,6 +56,32 @@
             <Response/>
             <Condition>(proxy.pathsuffix MatchesPath "/bq") and (request.verb = "GET")</Condition>
         </Flow>
+        <Flow name="Logging">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>KVLookup-LOG-SA-Key</Name>
+                </Step>
+                <Step>
+                    <Name>AMGCPScopesLOG</Name>
+                </Step>
+                <Step>
+                    <Name>FCGetGCPToken</Name>
+                </Step>
+                <Step>
+                    <Name>AMsetHeaderPayload.LOG</Name>
+                </Step>
+                <Step>
+                    <Name>JS-SetLoggingRecord</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>AM.setPayload.LOG</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/log") and (request.verb = "GET")</Condition>
+        </Flow>
         <Flow name="PubSub">
             <Description/>
             <Request>
@@ -87,6 +113,15 @@
         <Request/>
         <Response/>
     </PostFlow>
+    <PostClientFlow>
+        <Request/>
+        <Response>
+            <Step>
+                <Name>SC.SendLogs</Name>
+            </Step>
+        </Response>
+        <Condition>(proxy.pathsuffix MatchesPath "/log") and (request.verb = "GET")</Condition>
+    </PostClientFlow>
     <HTTPProxyConnection>
         <BasePath>/v1/gcpservice</BasePath>
     </HTTPProxyConnection>

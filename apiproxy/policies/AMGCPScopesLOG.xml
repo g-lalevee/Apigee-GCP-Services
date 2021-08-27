@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AMGCPScopesLOG">
+    <DisplayName>AM.GCPScopes.LOG</DisplayName>
+    <Properties/>
+    <AssignVariable>
+        <Name>gcp.scopes</Name>
+        <Value>https://www.googleapis.com/auth/logging.write</Value>
+    </AssignVariable>
+</AssignMessage>

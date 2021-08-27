@@ -31,8 +31,6 @@ It doesn't use Apigee Edge extension features.
 
 1. [Install Apigee GCP SA Shareflow](https://github.com/apigee/devrel/tree/main/references/gcp-sa-auth-shared-flow)<BR>This sharedflow is used obtain access tokens for Google Cloud service accounts. Access tokens are cached in a dedicated environment cache resource for 10min, and used to call GCP services.
 
-1. Deploy this proxy<BR>Deploy proxy in **apiproxy** folder.
-
 1. Create GCP Service Accounts<BR>To authorize Apigee to use Google Cloud BigQuery, Firestore, Cloud Logging and PubSub, you must first: 
     - Create 4 service accounts in Google Cloud and assign it the necessary roles to access your BigQuery dataset, your Firestore collection and write in Cloud Logging and publish a message into a PubSub topic (see [Understanding GCP roles](https://cloud.google.com/iam/docs/understanding-roles)).  
     - Create and download the 4 json keys for the 3 service accounts

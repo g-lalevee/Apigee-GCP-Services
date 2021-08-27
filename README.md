@@ -27,17 +27,19 @@ It doesn't use Apigee Edge extension features.
 
 1. [Install KVM Admin proxy (option)](https://github.com/apigee/devrel/tree/main/references/kvm-admin-api)<BR>This proxy is required with Apigee X/hybrid to create KVM entry. With Apigee Edge, you can use Apigee Web UI.
 
-2. [Install Apigee GCP SA Shareflow](https://github.com/apigee/devrel/tree/main/references/gcp-sa-auth-shared-flow)<BR>This sharedflow is used obtain access tokens for Google Cloud service accounts. Access tokens are cached in a dedicated environment cache resource for 10min, and used to call GCP services.
+1. [Install Apigee Sackmesser (option)](https://github.com/apigee/devrel/tree/main/tools/apigee-sackmesser)<BR>The Apigee Sackmesser lets you deploy API proxies, shared flows and configuration to Apigee Edge as well as hybrid/X without writing any additional manifest files..
 
-3. Deploy this proxy<BR>Deploy proxy in **apiproxy** folder.
+1. [Install Apigee GCP SA Shareflow](https://github.com/apigee/devrel/tree/main/references/gcp-sa-auth-shared-flow)<BR>This sharedflow is used obtain access tokens for Google Cloud service accounts. Access tokens are cached in a dedicated environment cache resource for 10min, and used to call GCP services.
 
-4. Create GCP Service Accounts<BR>To authorize Apigee to use Google Cloud BigQuery, Firestore, Cloud Logging and PubSub, you must first: 
+1. Deploy this proxy<BR>Deploy proxy in **apiproxy** folder.
+
+1. Create GCP Service Accounts<BR>To authorize Apigee to use Google Cloud BigQuery, Firestore, Cloud Logging and PubSub, you must first: 
     - Create 4 service accounts in Google Cloud and assign it the necessary roles to access your BigQuery dataset, your Firestore collection and write in Cloud Logging and publish a message into a PubSub topic (see [Understanding GCP roles](https://cloud.google.com/iam/docs/understanding-roles)).  
     - Create and download the 4 json keys for the 3 service accounts
 
-5. Configure GCP Services (BigQuery, Cloud Firestore in Native mode and PubSub)<BR>If needed, in your GCP project, create a BigQuery table, a Firestore Collection and a PubSub topic to be able to use this proxy.
+1. Configure GCP Services (BigQuery, Cloud Firestore in Native mode and PubSub)<BR>If needed, in your GCP project, create a BigQuery table, a Firestore Collection and a PubSub topic to be able to use this proxy.
 
-6. Upload your 4 GCP Service Account JSON files content into KVM Entries<BR>If you use Apigee X/hybrid, you can create a KVM using the following command
+1. Upload your 4 GCP Service Account JSON files content into KVM Entries<BR>If you use Apigee X/hybrid, you can create a KVM using the following command
 
 ```sh
 export TOKEN=$(gcloud auth print-access-token)
@@ -87,7 +89,22 @@ curl -i -X POST \
 ```
 If you use Apigee Edge, you can also use the Web UI.
 
-7. Configure this proxy
+1. Deploy this proxy to your Apigee organization
+
+    Exemple: straight deployment from Github to Apigee X / hybrid using [Sackmesser](https://github.com/apigee/devrel/tree/main/tools/apigee-sackmesser).
+    ```
+    export TOKEN=$(gcloud auth print-access-token)
+    export APIGEE_ORG=<YOUR-ORG-NAME>
+    export APIGEE_ENV=<YOUR-ENV-NAME>
+
+    sackmesser deploy -g https://github.com/g-lalevee/Apigee-GCP-Services \
+    --googleapi \
+    -t "$TOKEN" \
+    -o "$APIGEE_ORG" \
+    -e "$APIGEE_ENV" 
+    ```
+
+1. Configure this proxy
     1. If needed, update AM.GCPScopes.BQ, AM.GCPScopes.Firestore, AM.GCPScopes.LOG and AM.GCPScopes.PubSub policies to set the required scopes. In, this sample proxy, we will use: 
     - ```https://www.googleapis.com/auth/pubsub``` scope for PubSub, 
     -  ```https://www.googleapis.com/auth/datastore``` for Firestore  
@@ -149,7 +166,7 @@ If you use Apigee Edge, you can also use the Web UI.
         <Value>yyyyy</Value>
     </AssignVariable>
     ```
-8. Save and deploy proxy
+1. Save and deploy proxy
 
 ## Test
 

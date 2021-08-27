@@ -171,26 +171,26 @@ It doesn't use Apigee Edge extension features.
 
 You can now test your proxy.
 - BigQuery (no need to specify query, query is embeded in proxy itself)
-```
-curl -i -X GET  'https://<YOUR-HOSTNAME>/v1/gcpservice/bq'
-```
+    ```
+    curl -i -X GET  'https://<YOUR-HOSTNAME>/v1/gcpservice/bq'
+    ```
 
 - Firestore (it returns all documents in the collection defined in proxy)
-```
-curl -i -X GET 'https://<YOUR-HOSTNAME>/v1/gcpservice/fs'
-```
+    ```
+    curl -i -X GET 'https://<YOUR-HOSTNAME>/v1/gcpservice/fs'
+    ```
 
-- Cloud Logging (it returns th elink to Google Cloud Console, Cloud Logging Query builder)
-```
-curl -i -X GET 'https://<YOUR-HOSTNAME>/v1/gcpservice/log'
-```
+- Cloud Logging (it returns the link to Google Cloud Console, Cloud Logging Query builder)
+    ```
+    curl -i -X GET 'https://<YOUR-HOSTNAME>/v1/gcpservice/log'
+    ```
 
 - PubSub (body contains the message to be post in topic specified in the proxy)
-``` 
-curl -i -X POST \
-   -H "Content-Type:application/json" \
-   -d 'hello world!'  'https://<YOUR-HOSTNAME>/v1/gcpservice/ps'
-```
+    ``` 
+    curl -i -X POST \
+    -H "Content-Type:application/json" \
+    -d 'hello world!'  'https://<YOUR-HOSTNAME>/v1/gcpservice/ps'
+    ```
 
 
 Et voilà !!

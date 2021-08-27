@@ -8,7 +8,13 @@
 
 ## Intro
 
-This repository contains a proxy for Apigee Edge/x/hybrid to call 4 GCP Services: BigQuery (read) and Cloud Firestore in Native mode (list), Cloud Logging (write) and PubSub (publish). It doesn't use Apigee Edge extension features.
+This repository contains a proxy for Apigee Edge/x/hybrid to call 4 GCP Services: 
+- BigQuery (read)
+- Cloud Firestore in Native mode (list), 
+- Cloud Logging (write)
+- PubSub (publish). 
+
+It doesn't use Apigee Edge extension features.
 
 ![Proxy Overview](/images/proxy-overview.jpg)
 

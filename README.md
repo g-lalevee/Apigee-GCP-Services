@@ -16,6 +16,14 @@ This repository contains a proxy for Apigee Edge/x/hybrid to call 4 GCP Services
 
 It doesn't use Apigee Edge extension features.
 
+The flow principle is:
+1. Retrieve Service Account JSON Key from KVM (Policies KVLookup-XX-SA-Key)
+2. Set OAuth 2.0 Scopes for Google APIs (Policies AMGCPScopesXX)
+3. Call Sharedflow to get an Access Toke (Policy FCGetGCPToken)
+4. Set Header and/or Payload required by GCP Service (Policies AMsetHeaderPayload.XX)
+5. Call the GCP Service API
+
+
 ![Proxy Overview](/images/proxy-overview.jpg)
 
 ## Requirement

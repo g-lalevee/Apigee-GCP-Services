@@ -16,6 +16,7 @@ This repository contains a proxy for Apigee Edge/x/hybrid to call 5 GCP Services
  - Secret Manager (access)
 
 It doesn't use Apigee Edge extension features.
+Note: Apigee X new PublishMessage policy also lets you publish your API proxy flow information to a Google Cloud Pub/Sub topic. See [PublishMessage policy](https://cloud.google.com/apigee/docs/api-platform/reference/policies/publish-message-policy). 
 
 The flow principle is:
 1. Retrieve Service Account JSON Key from KVM (Policies KVLookup-XX-SA-Key)

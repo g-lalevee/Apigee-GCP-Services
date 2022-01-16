@@ -24,6 +24,7 @@ The flow principle is:
 4. Set Header and/or Payload required by GCP Service (Policies AMsetHeaderPayload.XX)
 5. Call the GCP Service API
 
+Note: Cloud Logging and Secret Manager flows use Service Callout policy to call the GCP Service API: it conforms more to the standard use of these GCP services.
 
 ![Proxy Overview](/images/proxy-overview.jpg)
 

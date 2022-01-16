@@ -12,11 +12,11 @@
     </Set>
     <AssignVariable>
         <Name>gcp.projectid</Name>
-        <Value>bap-emea-apigee-5</Value>
+        <Value>xxxxx</Value>
     </AssignVariable>
     <AssignVariable>
         <Name>collection.name</Name>
-        <Value>aircraft</Value>
+        <Value>xxxxx</Value>
     </AssignVariable>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
     <AssignTo createNew="false" transport="http" type="request"/>

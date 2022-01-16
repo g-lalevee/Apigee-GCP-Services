@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<AssignMessage continueOnError="false" enabled="true" name="AMsetHeaderPayload.LOG">
-    <DisplayName>AM.setHeaderPayload.LOG</DisplayName>
+<AssignMessage continueOnError="false" enabled="true" name="AMsetHeaderPayload.SM">
+    <DisplayName>AM.setHeaderPayload.SM</DisplayName>
     <Properties/>
     <AssignVariable>
         <Name>gcp.projectid</Name>
         <Value>xxxxx</Value>
     </AssignVariable>
     <AssignVariable>
-        <Name>gcplogging.logid</Name>
+        <Name>gcp.secretid</Name>
+        <Value>xxxxx</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>gcp.secretversion</Name>
         <Value>xxxxx</Value>
     </AssignVariable>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>

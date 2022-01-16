@@ -8,11 +8,12 @@
 
 ## Intro
 
-This repository contains a proxy for Apigee Edge/x/hybrid to call 4 GCP Services: 
+This repository contains a proxy for Apigee Edge/x/hybrid to call 5 GCP Services: 
  - BigQuery (read)
  - Cloud Firestore in Native mode (list),
  - Cloud Logging (write)
- - PubSub (publish). 
+ - PubSub (publish)
+ - Secret Manager (access)
 
 It doesn't use Apigee Edge extension features.
 
@@ -39,13 +40,13 @@ The flow principle is:
 
 1. [Install Apigee GCP SA Shareflow](https://github.com/apigee/devrel/tree/main/references/gcp-sa-auth-shared-flow)<BR>This sharedflow is used obtain access tokens for Google Cloud service accounts. Access tokens are cached in a dedicated environment cache resource for 10min, and used to call GCP services.
 
-1. Create GCP Service Accounts<BR>To authorize Apigee to use Google Cloud BigQuery, Firestore, Cloud Logging and PubSub, you must first: 
-    - Create 4 service accounts in Google Cloud and assign it the necessary roles to access your BigQuery dataset, your Firestore collection and write in Cloud Logging and publish a message into a PubSub topic (see [Understanding GCP roles](https://cloud.google.com/iam/docs/understanding-roles)).  
-    - Create and download the 4 json keys for the 3 service accounts
+1. Create GCP Service Accounts<BR>To authorize Apigee to use Google Cloud BigQuery, Firestore, Cloud Logging and PubSub, Secret Manager, you must first: 
+    - Create 5 service accounts in Google Cloud and assign it the necessary roles to access your BigQuery dataset, your Firestore collection, your secret and write in Cloud Logging and publish a message into a PubSub topic (see [Understanding GCP roles](https://cloud.google.com/iam/docs/understanding-roles)).  
+    - Create and download the 5 json keys for the 3 service accounts
 
-1. Configure GCP Services (BigQuery, Cloud Firestore in Native mode and PubSub)<BR>If needed, in your GCP project, create a BigQuery table, a Firestore Collection and a PubSub topic to be able to use this proxy.
+1. Configure GCP Services (BigQuery, Cloud Firestore in Native mode, PubSub and Secret Manager)<BR>If needed, in your GCP project, create a BigQuery table, a Firestore Collection, a PubSub topic and a secret to be able to use this proxy.
 
-1. Upload your 4 GCP Service Account JSON files content into KVM Entries<BR>If you use Apigee X/hybrid, you can create a KVM using the following command
+1. Upload your 5 GCP Service Account JSON files content into KVM Entries<BR>If you use Apigee X/hybrid, you can create a KVM using the following command
 
     ```sh
     export TOKEN=$(gcloud auth print-access-token)
@@ -94,6 +95,12 @@ The flow principle is:
     -d '{ "key": "MyPubSub__privKeyPem", "value": "<copy here PubSub SA key file jSON content>" } ' 
     ```
 
+    curl -i -X POST \
+    "https://$APIGEE_HOSTNAME/kvm-admin/v1/organizations/${APIGEE_ORG}/environments/$APIGEE_ENV/keyvaluemaps/$KVM_NAME/entries"
+    -H "Content-Type:application/json" \
+    -H "Authorization:Bearer $TOKEN" \
+    -d '{ "key": "MySM__privKeyPem", "value": "<copy here Secret Manager SA key file jSON content>" } ' 
+    ```
     If you use Apigee Edge, you can also use the Web UI.
 
 1. Deploy this proxy to your Apigee organization
@@ -113,10 +120,11 @@ The flow principle is:
 
 1. Configure this proxy
     1. If needed, update AM.GCPScopes.BQ, AM.GCPScopes.Firestore, AM.GCPScopes.LOG and AM.GCPScopes.PubSub policies to set the required scopes. In, this sample proxy, we will use: 
-        - ```https://www.googleapis.com/auth/pubsub``` scope for PubSub, 
         -  ```https://www.googleapis.com/auth/datastore``` for Firestore  
         -  ```https://www.googleapis.com/auth/logging.write``` for Cloud Logging
-        - ```https://www.googleapis.com/auth/bigquery.readonly``` for BigQuery.
+        - ```https://www.googleapis.com/auth/bigquery.readonly``` for BigQuery
+        - ```https://www.googleapis.com/auth/pubsub``` scope for PubSub, 
+        - ```https://www.googleapis.com/auth/cloud-platform``` scope for Secret Manager. 
     <BR> <BR>You can find documentation about GCP service scopes in [GCP documentation.](https://developers.google.com/identity/protocols/oauth2/scopes)
 
     2. Update AM.setHeaderPayload.BQ policy<BR>Update the payload with your BigQuery query statement:
@@ -147,7 +155,7 @@ The flow principle is:
         </AssignVariable>
         ```
 
-    4. Update AM.setHeaderPayload.LOG policy<BR>Set **gcp.projectid** and **gcplogging.logid** value with your GCP Project ID and the log name you want to use:
+    4. Update AM.setHeaderPayload.LOG policy.<BR>Set **gcp.projectid** and **gcplogging.logid** value with your GCP Project ID and the log name you want to use:
         
         ```
         <AssignVariable>
@@ -161,7 +169,7 @@ The flow principle is:
         ```
         > **_NOTE:_**  the log record format is defined in JS-SetLoggingRecord javascript policy
 
-    5. AM.setHeaderPayload.PubSub policy.<BR>Set **gcp.projectid** and **gcp.topicid** value with your GCP Project ID and PubSub topic:
+    5. Update AM.setHeaderPayload.PubSub policy.<BR>Set **gcp.projectid** and **gcp.topicid** value with your GCP Project ID and PubSub topic:
 
         ```
         <AssignVariable>
@@ -171,6 +179,22 @@ The flow principle is:
         <AssignVariable>
             <Name>gcp.topicid</Name>
             <Value>yyyyy</Value>
+        </AssignVariable>
+        ```
+    5. Update AM.setHeaderPayload.SM policy.<BR>Set **gcp.projectid**, **gcp.secretid** and **gcp.secretversion** values with your GCP Project ID, Secret Name and Secrceet Version (you can use **latest** to access the last veersion) topic:
+
+        ```
+        <AssignVariable>
+            <Name>gcp.projectid</Name>
+            <Value>xxxxx</Value>
+        </AssignVariable>
+        <AssignVariable>
+            <Name>gcp.secretid</Name>
+            <Value>yyyyy</Value>
+        </AssignVariable>
+        <AssignVariable>
+            <Name>gcp.secretversion</Name>
+            <Value>zzzzz</Value>
         </AssignVariable>
         ```
 1. Save and deploy proxy
@@ -200,5 +224,11 @@ You can now test your proxy.
     -d 'hello world!'  'https://<YOUR-HOSTNAME>/v1/gcpservice/ps'
     ```
 
+- Secret (it returns the decrypted secret )
+    ``` 
+    curl -i -X POST \
+    -H "Content-Type:application/json" \
+    -d 'hello world!'  'https://<YOUR-HOSTNAME>/v1/gcpservice/sm'
+    ```
 
 Et voilà !!

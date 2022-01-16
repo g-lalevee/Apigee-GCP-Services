@@ -15,11 +15,11 @@
     </Set>
     <AssignVariable>
         <Name>gcp.projectid</Name>
-        <Value>lalevee-tests</Value>
+        <Value>xxxxx</Value>
     </AssignVariable>
     <AssignVariable>
         <Name>gcp.topicid</Name>
-        <Value>connected-car</Value>
+        <Value>xxxxx</Value>
     </AssignVariable>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
     <AssignTo createNew="false" transport="http" type="request"/>

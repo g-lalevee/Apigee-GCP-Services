@@ -1,28 +1,35 @@
-<APIProxy revision="19" name="GCP-Services.v1">
+<APIProxy revision="1" name="GCP-Services.v1">
     <DisplayName></DisplayName>
     <Description></Description>
-    <CreatedAt>1630075236132</CreatedAt>
-    <LastModifiedAt>1630075236132</LastModifiedAt>
+    <CreatedAt>1642372354174</CreatedAt>
+    <LastModifiedAt>1642372354174</LastModifiedAt>
     <BasePaths>/v1/gcpservice</BasePaths>
     <Policies>
-        <Policy>RF-404</Policy>
-        <Policy>KVLookup-BQ-SA-Key</Policy>
-        <Policy>AMGCPScopesBQ</Policy>
         <Policy>FCGetGCPToken</Policy>
-        <Policy>AMsetTargetPath</Policy>
-        <Policy>KVLookup-PubSub-SA-Key</Policy>
-        <Policy>AMGCPScopesPubSub</Policy>
-        <Policy>AMsetHeaderPayload.BQ</Policy>
-        <Policy>AMsetHeaderPayloadPubSub</Policy>
-        <Policy>KVLookup-FSN-SA-Key</Policy>
-        <Policy>AMGCPScopesFirestore</Policy>
+        <Policy>RF-404</Policy>
+        <Policy>JS-SetLoggingRecord</Policy>
         <Policy>AMsetHeaderPayloadFirestore</Policy>
         <Policy>SC.SendLogs</Policy>
-        <Policy>KVLookup-LOG-SA-Key</Policy>
-        <Policy>AMGCPScopesLOG</Policy>
+        <Policy>AMGCPScopesPubSub</Policy>
         <Policy>AMsetHeaderPayload.LOG</Policy>
-        <Policy>JS-SetLoggingRecord</Policy>
+        <Policy>AMsetHeaderPayloadPubSub</Policy>
         <Policy>AM.setPayload.LOG</Policy>
+        <Policy>AMGCPScopesFirestore</Policy>
+        <Policy>AMsetTargetPath</Policy>
+        <Policy>AMGCPScopesLOG</Policy>
+        <Policy>KVLookup-LOG-SA-Key</Policy>
+        <Policy>KVLookup-BQ-SA-Key</Policy>
+        <Policy>AMGCPScopesBQ</Policy>
+        <Policy>AMsetHeaderPayload.BQ</Policy>
+        <Policy>KVLookup-FSN-SA-Key</Policy>
+        <Policy>KVLookup-PubSub-SA-Key</Policy>
+        <Policy>KVLookup-SM-SA-Key</Policy>
+        <Policy>AMGCPScopesSM</Policy>
+        <Policy>AMsetHeaderPayload.SM</Policy>
+        <Policy>SC-getSecret</Policy>
+        <Policy>DJWT-decodeSecret</Policy>
+        <Policy>EV-getSecret</Policy>
+        <Policy>AM-decodeSecret</Policy>
     </Policies>
     <ProxyEndpoints>
         <ProxyEndpoint>default</ProxyEndpoint>
@@ -31,8 +38,9 @@
         <Resource>jsc://SetLoggingRecord.js</Resource>
     </Resources>
     <TargetEndpoints>
+        <TargetEndpoint>Firestore</TargetEndpoint>
         <TargetEndpoint>BigQuery</TargetEndpoint>
         <TargetEndpoint>PubSub</TargetEndpoint>
-        <TargetEndpoint>Firestore</TargetEndpoint>
+        <TargetEndpoint>SecretManager</TargetEndpoint>
     </TargetEndpoints>
 </APIProxy>

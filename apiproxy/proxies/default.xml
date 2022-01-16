@@ -101,6 +101,35 @@
             <Response/>
             <Condition>(proxy.pathsuffix MatchesPath "/ps") and (request.verb = "POST")</Condition>
         </Flow>
+        <Flow name="SecretManager">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>KVLookup-SM-SA-Key</Name>
+                </Step>
+                <Step>
+                    <Name>AMGCPScopesSM</Name>
+                </Step>
+                <Step>
+                    <Name>FCGetGCPToken</Name>
+                </Step>
+                <Step>
+                    <Name>AMsetHeaderPayload.SM</Name>
+                </Step>
+                <Step>
+                    <Name>SC-getSecret</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>EV-getSecret</Name>
+                </Step>
+                <Step>
+                    <Name>AM-decodeSecret</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/sm") and (request.verb = "GET")</Condition>
+        </Flow>
         <Flow name="fallback 404">
             <Request>
                 <Step>
@@ -118,9 +147,9 @@
         <Response>
             <Step>
                 <Name>SC.SendLogs</Name>
+                <Condition>(proxy.pathsuffix MatchesPath "/log") and (request.verb = "GET")</Condition>
             </Step>
         </Response>
-        <Condition>(proxy.pathsuffix MatchesPath "/log") and (request.verb = "GET")</Condition>
     </PostClientFlow>
     <HTTPProxyConnection>
         <BasePath>/v1/gcpservice</BasePath>

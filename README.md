@@ -35,11 +35,11 @@ Note: Cloud Logging and Secret Manager flows use Service Callout policy to call 
 
 ## Installation
 
-1. [Install KVM Admin proxy (option)](https://github.com/apigee/devrel/tree/main/references/kvm-admin-api)<BR>This proxy is required with Apigee X/hybrid to create KVM entry. With Apigee Edge, you can use Apigee Web UI.
+1. [Install KVM Admin proxy (option)](https://github.com/apigee/devrel/tree/main/references/kvm-admin-api)<BR>This proxy is required with Apigee X/hybrid to create KVM entry. With Apigee Edge, you can use Apigee Web UI.<BR>Source: [Github Apigee Devrel](https://github.com/apigee/devrel). 
 
-1. [Install Apigee Sackmesser (option)](https://github.com/apigee/devrel/tree/main/tools/apigee-sackmesser)<BR>The Apigee Sackmesser lets you deploy API proxies, shared flows and configuration to Apigee Edge as well as hybrid/X without writing any additional manifest files..
+1. [Install Apigee Sackmesser (option)](https://github.com/apigee/devrel/tree/main/tools/apigee-sackmesser)<BR>The Apigee Sackmesser lets you deploy API proxies, shared flows and configuration to Apigee Edge as well as hybrid/X without writing any additional manifest files.<BR>Source: [Github Apigee Devrel](https://github.com/apigee/devrel). 
 
-1. [Install Apigee GCP SA Shareflow](https://github.com/apigee/devrel/tree/main/references/gcp-sa-auth-shared-flow)<BR>This sharedflow is used obtain access tokens for Google Cloud service accounts. Access tokens are cached in a dedicated environment cache resource for 10min, and used to call GCP services.
+1. [Install Apigee GCP SA Shareflow](https://github.com/apigee/devrel/tree/main/references/gcp-sa-auth-shared-flow)<BR>This sharedflow is used obtain access tokens for Google Cloud service accounts. Access tokens are cached in a dedicated environment cache resource for 10min, and used to call GCP services.<BR>Source: [Github Apigee Devrel](https://github.com/apigee/devrel). 
 
 1. Create GCP Service Accounts<BR>To authorize Apigee to use Google Cloud BigQuery, Firestore, Cloud Logging and PubSub, Secret Manager, you must first: 
     - Create 5 service accounts in Google Cloud and assign it the necessary roles to access your BigQuery dataset, your Firestore collection, your secret and write in Cloud Logging and publish a message into a PubSub topic (see [Understanding GCP roles](https://cloud.google.com/iam/docs/understanding-roles)).  

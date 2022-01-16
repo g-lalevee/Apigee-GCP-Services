@@ -94,7 +94,6 @@ Note: Cloud Logging and Secret Manager flows use Service Callout policy to call 
     -H "Content-Type:application/json" \
     -H "Authorization:Bearer $TOKEN" \
     -d '{ "key": "MyPubSub__privKeyPem", "value": "<copy here PubSub SA key file jSON content>" } ' 
-    ```
 
     curl -i -X POST \
     "https://$APIGEE_HOSTNAME/kvm-admin/v1/organizations/${APIGEE_ORG}/environments/$APIGEE_ENV/keyvaluemaps/$KVM_NAME/entries"

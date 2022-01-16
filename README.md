@@ -43,7 +43,7 @@ Note: Cloud Logging and Secret Manager flows use Service Callout policy to call 
 
 1. Create GCP Service Accounts<BR>To authorize Apigee to use Google Cloud BigQuery, Firestore, Cloud Logging and PubSub, Secret Manager, you must first: 
     - Create 5 service accounts in Google Cloud and assign it the necessary roles to access your BigQuery dataset, your Firestore collection, your secret and write in Cloud Logging and publish a message into a PubSub topic (see [Understanding GCP roles](https://cloud.google.com/iam/docs/understanding-roles)).  
-    - Create and download the 5 json keys for the 3 service accounts
+    - Create and download the 5 json keys for the 5 service accounts
 
 1. Configure GCP Services (BigQuery, Cloud Firestore in Native mode, PubSub and Secret Manager)<BR>If needed, in your GCP project, create a BigQuery table, a Firestore Collection, a PubSub topic and a secret to be able to use this proxy.
 

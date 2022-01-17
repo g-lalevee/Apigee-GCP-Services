@@ -15,9 +15,9 @@ This repository contains a proxy for Apigee Edge/x/hybrid to call 5 GCP Services
  - PubSub (publish)
  - Secret Manager (access)
 
-It doesn't use Apigee Edge extension features.
+>It doesn't use Apigee Edge extension features.
 
-Note: Apigee X new PublishMessage policy also lets you publish your API proxy flow information to a Google Cloud Pub/Sub topic. See [PublishMessage policy](https://cloud.google.com/apigee/docs/api-platform/reference/policies/publish-message-policy). 
+> Note: Apigee X new PublishMessage policy also lets you publish your API proxy flow information to a Google Cloud Pub/Sub topic. See [PublishMessage policy](https://cloud.google.com/apigee/docs/api-platform/reference/policies/publish-message-policy). 
 
 The flow principle is:
 1. Retrieve Service Account JSON Key from KVM (Policies KVLookup-XX-SA-Key)
@@ -26,7 +26,7 @@ The flow principle is:
 4. Set Header and/or Payload required by GCP Service (Policies AMsetHeaderPayload.XX)
 5. Call the GCP Service API
 
-Note: Cloud Logging and Secret Manager flows use Service Callout policy to call the GCP Service API: it conforms more to the standard use of these GCP services.
+> Note: Cloud Logging and Secret Manager flows use Service Callout policy to call the GCP Service API: it conforms more to the standard use of these GCP services.
 
 ![Proxy Overview](/images/proxy-overview.jpg)
 
